@@ -1,9 +1,11 @@
 <?php
 
-class FileStorage implements IStorage{
+class FileStorage implements IStorage {
 	protected array $records = [];
 	protected int $ai = 0;
 	protected string $dbPath;
+
+    protected static array $instances = [];
 
 	public function __construct(string $dbPath){
 		$this->dbPath = $dbPath;
@@ -52,4 +54,13 @@ class FileStorage implements IStorage{
 			'ai' => $this->ai
 		]));
 	}
+
+    public static function getInstance(string $path): static
+    {
+        if (!array_key_exists($path, self::$instances) || self::$instances[$path] === null) {
+            self::$instances[$path] = new static($path);
+        }
+
+        return self::$instances[$path];
+    }
 }
