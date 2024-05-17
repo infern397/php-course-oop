@@ -83,14 +83,14 @@ class JSONLogger
 {
     protected array $objects = [];
 
-    public function addObject($obj): void
+    public function addObject(JsonSerializable $obj): void
     {
         $this->objects[] = $obj;
     }
 
     public function log(string $betweenLogs = ','): string
     {
-        $logs = array_map(function ($obj) {
+        $logs = array_map(function (JsonSerializable $obj) {
             return $obj->jsonSerialize();
         }, $this->objects);
 
