@@ -37,13 +37,13 @@ class Storage implements IStorage, JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        return implode(', ', array_map(function ($key, $value) {
+        return get_class($this) . ': [' . implode(', ', array_map(function ($key, $value) {
             return "$key: $value";
-        }, array_keys($this->storage), array_values($this->storage)));
+        }, array_keys($this->storage), array_values($this->storage))) . ']';
     }
 }
 
-class Animal
+class Animal implements JsonSerializable
 {
     public $name;
     public $health;
@@ -71,6 +71,11 @@ class Animal
             $this->health = 0;
             $this->alive = false;
         }
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return "Name: $this->name, health: $this->health, alive: $this->alive, power: $this->power";
     }
 }
 
@@ -108,10 +113,19 @@ function testStorage()
 
 function testSerialize()
 {
-    $a = ['test' => 'test value', 'again' => 'some'];
-    print_r(implode(', ', array_map(function ($key, $value) {
-        return "$key: $value";
-    }, array_keys($a), array_values($a))));
+    $a1 = new Animal('Murzik', 20, 5);
+    $a2 = new Animal('Bobik', 30, 3);
+    $gameStorage = new Storage();
+    $gameStorage->add('test', mt_rand(1, 10));
+    $gameStorage->add('other', mt_rand(1, 10));
+
+    $logger = new JSONLogger();
+    $logger->addObject($a1);
+    $logger->addObject($a2);
+    $logger->addObject($gameStorage);
+
+    echo $logger->log('<br>') . '<hr>';
+
 }
 
 //testStorage();
