@@ -37,9 +37,7 @@ class Storage implements IStorage, JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        return get_class($this) . ': [' . implode(', ', array_map(function ($key, $value) {
-            return "$key: $value";
-        }, array_keys($this->storage), array_values($this->storage))) . ']';
+        return json_encode($this->storage);
     }
 }
 
@@ -75,7 +73,13 @@ class Animal implements JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        return "Name: $this->name, health: $this->health, alive: $this->alive, power: $this->power";
+        return json_encode([
+                'name' => $this->name,
+                'health' => $this->health,
+                'alive' => $this->alive,
+                'power' => $this->power,
+            ]
+        );
     }
 }
 
