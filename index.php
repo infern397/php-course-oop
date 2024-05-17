@@ -75,20 +75,16 @@ class SingleTag extends Tag
 //echo $a->render();
 
 $firstImg = new SingleTag('img');
-$firstImg->attr('src', 'f1.jpg');
-$firstImg->attr('alt', 'f1 not found');
+$firstImg->attr('src', 'f1.jpg')->attr('alt', 'f1 not found')->render();
 
 $firstInput = new SingleTag('input');
-$firstInput->attr('type', 'text');
-$firstInput->attr('name', 'f1');
+$firstInput->attr('type', 'text')->attr('name', 'f1');
 
 $secondImg = new SingleTag('img');
-$secondImg->attr('src', 'f2.jpg');
-$secondImg->attr('alt', 'f2 not found');
+$secondImg->attr('src', 'f2.jpg')->attr('alt', 'f2 not found');
 
 $secondInput = new SingleTag('input');
-$secondInput->attr('type', 'password');
-$secondInput->attr('name', 'f2');
+$secondInput->attr('type', 'password')->attr('name', 'f2');
 
 $firstLabel = new PairTag('label');
 $firstLabel->appendChild($firstImg)->appendChild($firstInput);
@@ -97,12 +93,11 @@ $secondLabel = new PairTag('label');
 $secondLabel->appendChild($secondImg)->appendChild($secondInput);
 
 $thirdInput = new SingleTag('input');
-$thirdInput->attr('type', 'submit');
-$thirdInput->attr('value', 'Send');
+$thirdInput->attr('type', 'submit')->attr('value', 'Send');
 
 $form = new PairTag('form');
 $form->appendChild($firstLabel)
     ->appendChild($secondLabel)
-    ->appendChild($thirdInput)
-    ->render();
+    ->appendChild($thirdInput);
+echo htmlspecialchars($form->render());
 
