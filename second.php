@@ -11,7 +11,7 @@ interface IStorage
     public function get(string $key): mixed;
 }
 
-class Storage implements IStorage
+class Storage implements IStorage, JsonSerializable
 {
     protected array $storage = [];
 
@@ -33,6 +33,13 @@ class Storage implements IStorage
     public function get(string $key): mixed
     {
         return $this->storage[$key];
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return implode(', ', array_map(function ($key, $value) {
+            return "$key: $value";
+        }, array_keys($this->storage), array_values($this->storage)));
     }
 }
 
@@ -93,10 +100,19 @@ function testStorage()
     $storage->add('another', 456);
     print_r('test = ' . $storage->get('test'));
     echo '<br>';
-    print_r('test isset ' . (int) $storage->contains('test'));
+    print_r('test isset ' . (int)$storage->contains('test'));
     $storage->remove('test');
     print_r('test = ' . $storage->get('test'));
-    print_r('test isset ' . (int) $storage->contains('test'));
+    print_r('test isset ' . (int)$storage->contains('test'));
 }
 
-testStorage();
+function testSerialize()
+{
+    $a = ['test' => 'test value', 'again' => 'some'];
+    print_r(implode(', ', array_map(function ($key, $value) {
+        return "$key: $value";
+    }, array_keys($a), array_values($a))));
+}
+
+//testStorage();
+testSerialize();
