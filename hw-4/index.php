@@ -1,13 +1,16 @@
 <?php
 
+use articles\Controller;
+use system\Router;
+
 include_once('init.php');
 
 const BASE_URL = '/php2/hw-4/';
 $router = new Router(BASE_URL);
 
-$router->addRoute('', 'ArticlesController');
-$router->addRoute('article/1', 'ArticlesController', 'item');
-$router->addRoute('article/2', 'ArticlesController', 'item'); // e t.c post/99, post/100 lol :))
+$router->addRoute('', Controller::class);
+$router->addRoute('article/1', Controller::class, 'item');
+$router->addRoute('article/2', Controller::class, 'item'); // e t.c post/99, post/100 lol :))
 
 $uri = $_SERVER['REQUEST_URI'];
 $activeRoute = $router->resolvePath($uri);

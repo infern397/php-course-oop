@@ -1,6 +1,7 @@
 <?php
+namespace system;
 
 interface IController{
-	public function setEnviroment(array $urlParams) : void;
+	public function setEnvironment(array $urlParams) : void;
 	public function render() : string;
 }

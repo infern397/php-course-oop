@@ -1,6 +1,11 @@
 <?php
+namespace articles;
 
-class ArticlesController implements IController{
+use system\FileStorage;
+use system\IController;
+use system\IStorage;
+
+class Controller implements IController{
 	protected string $title = '';
 	protected string $content = '';
 	protected array $env;
@@ -10,7 +15,7 @@ class ArticlesController implements IController{
 		$this->storage = FileStorage::getInstance('db/articles.txt'); // yes-yes, without DI it is trash
 	}
 
-	public function setEnviroment(array $urlParams) : void{
+	public function setEnvironment(array $urlParams) : void{
 		$this->env = $urlParams;
 	}
 

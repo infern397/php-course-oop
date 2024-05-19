@@ -1,4 +1,5 @@
 <?php
+namespace system;
 
 class FileStorage implements IStorage{
 	protected array $records = [];
