@@ -9,4 +9,6 @@ include_once('articles/controller.php');
 
 include_once('exceptions/NotFoundException.php');
 include_once('exceptions/FatalException.php');
+include_once('exceptions/ForbiddenException.php');
+include_once('exceptions/Controller.php');
 
