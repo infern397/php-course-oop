@@ -20,11 +20,21 @@ var_dump(
 
 echo new SelectBuilder('messages');
 
-function niceDump($any){
-	echo '<pre>';
-	var_dump($any);
-	echo '</pre>';
-}
+//function niceDump($any){
+//	echo '<pre>';
+//	var_dump($any);
+//	echo '</pre>';
+//}
 
+$messages = $db->select((new SelectBuilder('messages'))
+    ->select('count(*), id_cat')
+    ->orderBy('dt_add', 'ASC')
+    ->groupBy('id_cat')
+    ->limit('2')
+    ->where('id_message', '>', '1')
+);
+echo '<pre>';
+print_r($messages);
+echo '</pre>';
 /* (new SelectBuilder('messages'))->order_by('id_messages DESC')->where
  */
